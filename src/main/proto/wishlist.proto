@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.wishlist";
+option java_outer_classname = "WishListProto";
+option objc_class_prefix = "WLP";
+
+package wishlist;
+
+//Messages
+message User{
+    string name = 1;
+    int32 id = 2;
+    string email = 3;
+}
+
+message Article {
+    string name = 1;
+    int32 id = 2;
+    string content = 3;
+}
+
+message List{
+    repeated Article articles = 1; //a list is formed by 0, 1 or many articles
+}
+
+message Request {
+    User user =1; //from which list
+    Article article=2; //which article
+}
+
+message Response {
+    string message = 1;
+}
+
+//Interface
+service WishList {
+    /**
+    * Add an article to user's list
+    * Simple RPC
+    */
+    rpc AddArticle(Request) returns (Response)
+
+    /**
+    * Delete an article from user's list
+    * Simple RPC
+    */
+    rpc RemoveArticle(Request) returns (Response)
+
+    /**
+    * Retreive user's list
+    * Server-side streaming RPC
+    */
+    rpc GetList(User) returns (stream List)
+}
