@@ -20,10 +20,6 @@ message Article {
     string content = 3;
 }
 
-message List{
-    repeated Article articles = 1; //a list is formed by 0, 1 or many articles
-}
-
 message Request {
     User user =1; //from which list
     Article article=2; //which article
@@ -51,5 +47,5 @@ service WishList {
     * Retreive user's list
     * Server-side streaming RPC
     */
-    rpc GetList(User) returns (stream List);
+    rpc GetList(User) returns (stream Article);
 }

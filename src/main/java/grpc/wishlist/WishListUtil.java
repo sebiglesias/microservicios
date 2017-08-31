@@ -1,5 +1,7 @@
 package grpc.wishlist;
 
+import java.util.List;
+
 /**
  * Created by sebi on 31/08/17.
  */
