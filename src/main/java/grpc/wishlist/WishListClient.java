@@ -43,10 +43,10 @@ public class WishListClient {
         final Request request = requestBuilder.setUser(sebastian).setArticle(articulo).build();
 
         final Response response = blockingStub.addArticle(request);
-//        System.out.println(response.getMessage());
+        System.out.println(response.getMessage());
 
         final Response response1 = blockingStub.removeArticle(request);
-//        System.out.println(response1.getMessage());
+        System.out.println(response1.getMessage());
         //todo getList
 //        asyncStub.getList(sebastian).var;
     }

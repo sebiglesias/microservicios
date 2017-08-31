@@ -1,10 +1,6 @@
 package grpc.wishlist.services;
 
-import grpc.wishlist.Article;
-import grpc.wishlist.Request;
-import grpc.wishlist.Response;
-import grpc.wishlist.User;
-import io.grpc.ServerServiceDefinition;
+import grpc.wishlist.*;
 import io.grpc.stub.StreamObserver;
 
 import java.util.Iterator;
@@ -14,17 +10,12 @@ import java.util.TreeMap;
 /**
  * Created by sebi on 31/08/17.
  */
-public class WishListService implements Service {
+public class WishListService extends WishListGrpc.WishListImplBase implements Service {
 
     private Map<User,Article> wishlists;
 
     public WishListService(){
         wishlists = new TreeMap<>();
-    }
-
-    @Override
-    public ServerServiceDefinition bindService() {
-        return ServerServiceDefinition.builder("WishListService").build();
     }
 
     /**
