@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'idea'
 apply plugin: 'application'
+mainClassName = 'grpc.wishlist.WishListServer'
 
 sourceCompatibility = 1.8
 

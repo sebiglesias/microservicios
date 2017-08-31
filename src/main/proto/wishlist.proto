@@ -39,17 +39,17 @@ service WishList {
     * Add an article to user's list
     * Simple RPC
     */
-    rpc AddArticle(Request) returns (Response)
+    rpc AddArticle(Request) returns (Response);
 
     /**
     * Delete an article from user's list
     * Simple RPC
     */
-    rpc RemoveArticle(Request) returns (Response)
+    rpc RemoveArticle(Request) returns (Response);
 
     /**
     * Retreive user's list
     * Server-side streaming RPC
     */
-    rpc GetList(User) returns (stream List)
+    rpc GetList(User) returns (stream List);
 }
