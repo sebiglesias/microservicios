@@ -26,11 +26,12 @@ repositories {
 }
 
 def grpcVersion = '1.4.0'
-
+def gradleVersion = '4.1.0'
 dependencies {
     compile "io.grpc:grpc-netty:${grpcVersion}"
     compile "io.grpc:grpc-protobuf:${grpcVersion}"
     compile "io.grpc:grpc-stub:${grpcVersion}"
+    compile "com.google.inject:guice:${gradleVersion}"
 
     testCompile "junit:junit:4.11"
     testCompile "org.mockito:mockito-core:1.9.5"
