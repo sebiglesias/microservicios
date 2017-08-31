@@ -13,15 +13,17 @@ import java.io.IOException;
  * Created by sebi on 29/08/17.
  */
 public class WishListServer {
-    private final int port;
     private final Server server;
+    private final int port;
 
     public WishListServer(int port, Service service){
-        this.server = ServerBuilder.forPort(port).addService(service).build();
+        final ServerBuilder<?> serverBuilder = ServerBuilder.forPort(port);
+        this.server = serverBuilder.addService(service).build();
         this.port = port;
     }
 
     public void start() throws IOException {
+        System.out.println("***Starting Server at port: " + this.port+ " ***");
         server.start();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.err.println("*** shutting down gRPC server since JVM is shutting down");

@@ -24,7 +24,7 @@ public class WishListService implements Service {
 
     @Override
     public ServerServiceDefinition bindService() {
-        return null;
+        return ServerServiceDefinition.builder("WishListService").build();
     }
 
     /**
