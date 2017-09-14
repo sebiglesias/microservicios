@@ -16,14 +16,14 @@ public class WishListServer {
     private final Server server;
     private final int port;
 
-    public WishListServer(int port, Service service){
+    public WishListServer(int port, Service service) {
         final ServerBuilder<?> serverBuilder = ServerBuilder.forPort(port);
         this.server = serverBuilder.addService(service).build();
         this.port = port;
     }
 
     public void start() throws IOException {
-        System.out.println("***Starting Server at port: " + this.port+ " ***");
+        System.out.println("***Starting Server at port:" + this.port + " ***");
         server.start();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.err.println("*** shutting down gRPC server since JVM is shutting down");
@@ -46,7 +46,7 @@ public class WishListServer {
 
     public static void main(String[] args) throws Exception {
         Injector injector = Guice.createInjector(new ServiceModule());
-        WishListServer server = new WishListServer(8980,injector.getInstance(Service.class));
+        WishListServer server = new WishListServer(8980, injector.getInstance(Service.class));
         server.start();
         server.blockUntilShutdown();
     }

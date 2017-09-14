@@ -8,21 +8,26 @@ option objc_class_prefix = "WLP";
 package wishlist;
 
 //Messages
-message User{
+message Item {
+    string name = 1;
+}
+
+message User {
     string name = 1;
     int32 id = 2;
     string email = 3;
 }
 
-message Article {
+message List {
     string name = 1;
     int32 id = 2;
     string content = 3;
+    repeated Item item = 4;
 }
 
 message Request {
-    User user =1; //from which list
-    Article article=2; //which article
+    User user = 1; //from which list
+    Item item = 2; //which item
 }
 
 message Response {
@@ -35,17 +40,17 @@ service WishList {
     * Add an article to user's list
     * Simple RPC
     */
-    rpc AddArticle(Request) returns (Response);
+    rpc AddItem (Request) returns (Response);
 
     /**
     * Delete an article from user's list
     * Simple RPC
     */
-    rpc RemoveArticle(Request) returns (Response);
+    rpc RemoveItem (Request) returns (Response);
 
     /**
     * Retreive user's list
     * Server-side streaming RPC
     */
-    rpc GetList(User) returns (stream Article);
+    rpc GetList (User) returns (stream Item);
 }

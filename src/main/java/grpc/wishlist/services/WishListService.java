@@ -1,21 +1,25 @@
 package grpc.wishlist.services;
 
 import grpc.wishlist.*;
+import grpc.wishlist.transactions.*;
 import io.grpc.stub.StreamObserver;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by sebi on 31/08/17.
  */
 public class WishListService extends WishListGrpc.WishListImplBase implements Service {
 
-    private Map<User,Article> wishlists;
+    private Map<User,List<Item>> wishlists;
+    private List<Transaction> log;
+
 
     public WishListService(){
         wishlists = new TreeMap<>();
+        log = new ArrayList<>();
     }
 
     /**
@@ -24,14 +28,17 @@ public class WishListService extends WishListGrpc.WishListImplBase implements Se
      * @param request
      * @param response
      */
-    public void addArticle(Request request, StreamObserver<Response> response){
-        response.onNext(addArticle(request.getUser(),request.getArticle()));
+    public void addItem(Request request, StreamObserver<Response> response){
+        response.onNext(addItem(request.getUser(),request.getItem()));
+        log.add(new AddTransaction(request.getUser(),request.getItem()));
         response.onCompleted();
     }
 
     //todo Make a request to a real db
-    private Response addArticle(User user, Article article) {
-//        return new Response("Article "+article.getName()+" Added");
+    private Response addItem(User user, Item item) {
+        wishlists.computeIfAbsent(user, k -> new ArrayList<>());
+        wishlists.get(user).add(item);
+        //TODO comunicarle al resto
         return Response.getDefaultInstance();
     }
 
@@ -41,33 +48,34 @@ public class WishListService extends WishListGrpc.WishListImplBase implements Se
      * @param request
      * @param response
      */
-    public void removeArticle(Request request, StreamObserver<Response> response){
-        response.onNext(removeArticle(request.getUser(),request.getArticle()));
+    public void removeItem(Request request, StreamObserver<Response> response){
+        response.onNext(removeItem(request.getUser(),request.getItem()));
+        log.add(new RemoveTransaction(request.getUser(),request.getItem()));
+        //TODO informar al resto
         response.onCompleted();
     }
 
     //todo make a request to a real db
-    private Response removeArticle(User user, Article article) {
-//        return new Response("Article "+article.getName()+" deleted");
+    private Response removeItem(User user, Item item) {
+        wishlists.get(user).remove(item);
         return Response.getDefaultInstance();
     }
 
     /**
      * Returns a user's wishlist
      * @param user
-     * @param article
+     * @param item
      */
-    public void getWishList(User user, StreamObserver<Article> article){
-        final Iterator<Article> wishList = getWishList(user);
-        if (wishList != null && wishList.hasNext()){
-            wishList.forEachRemaining(article::onNext);
-            article.onCompleted();
+    public void getWishList(User user, StreamObserver<Item> item){
+        final Iterator<Item> wishList = getWishList(user);
+        if (wishList.hasNext()){
+            wishList.forEachRemaining(item::onNext);
+            item.onCompleted();
         }
     }
 
-    //todo make a request to a real db
-    private Iterator<Article> getWishList(User user) {
-        return null;
+    private Iterator<Item> getWishList(User user) {
+        return wishlists.get(user).iterator();
     }
 
 }

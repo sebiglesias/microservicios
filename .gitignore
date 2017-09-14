@@ -2,3 +2,6 @@
 .idea/
 gradle/
 settings.gradle
+build/
+microservicios.iml
+gradlew.bat
