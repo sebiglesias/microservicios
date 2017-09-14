@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class WishListService extends WishListGrpc.WishListImplBase implements Service {
 
-    private Map<User,List<Item>> wishlists;
+    private Map<Integer,List<Item>> wishlists;
     private List<Transaction> log;
 
 
@@ -36,10 +36,11 @@ public class WishListService extends WishListGrpc.WishListImplBase implements Se
 
     //todo Make a request to a real db
     private Response addItem(User user, Item item) {
-        wishlists.computeIfAbsent(user, k -> new ArrayList<>());
-        wishlists.get(user).add(item);
+        wishlists.computeIfAbsent(user.getId(), k -> new ArrayList<>());
+        wishlists.get(user.getId()).add(item);
+        final Response.Builder responseBuilder = Response.newBuilder();
         //TODO comunicarle al resto
-        return Response.getDefaultInstance();
+        return responseBuilder.setMessage("Hello world!").build();
     }
 
     /**
@@ -57,7 +58,7 @@ public class WishListService extends WishListGrpc.WishListImplBase implements Se
 
     //todo make a request to a real db
     private Response removeItem(User user, Item item) {
-        wishlists.get(user).remove(item);
+        wishlists.get(user.getId()).remove(item);
         return Response.getDefaultInstance();
     }
 

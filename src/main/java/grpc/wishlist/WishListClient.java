@@ -33,21 +33,21 @@ public class WishListClient {
         final WishListClient client = new WishListClient("localhost", 8980);
         final WishListGrpc.WishListBlockingStub blockingStub = client.getBlockingStub();
         final WishListGrpc.WishListStub asyncStub = client.getAsyncStub();
-//
-//        final Request.Builder requestBuilder = Request.newBuilder();
-//        final Article.Builder articleBuilder = Article.newBuilder();
-//        final User.Builder userBuilder = User.newBuilder();
-//
-//        final User sebastian = userBuilder.setEmail("sebi@hotmail.com").setId(0303).setName("Sebastian").build();
-//        final Article articulo = articleBuilder.setContent("Gran noticia..").setId(7328).setName("Articulo").build();
-//        final Request request = requestBuilder.setUser(sebastian).setItem(articulo).build();
-//
-//        final Response response = blockingStub.addArticle(request);
-//        System.out.println(response.getMessage());
-//
-//        final Response response1 = blockingStub.removeArticle(request);
-//        System.out.println(response1.getMessage());
-//        //todo getList
+
+        final Request.Builder requestBuilder = Request.newBuilder();
+        final Item.Builder itemBuilder = Item.newBuilder();
+        final User.Builder userBuilder = User.newBuilder();
+
+        final User sebastian = userBuilder.setEmail("sebi@hotmail.com").setId(0303).setName("Sebastian").build();
+        final Item item = itemBuilder.setName("Articulo").build();
+        final Request request = requestBuilder.setUser(sebastian).setItem(item).build();
+
+        final Response response = blockingStub.addItem(request);
+        System.out.println(response.getMessage());
+
+        final Response response1 = blockingStub.removeItem(request);
+        System.out.println(response1.getMessage());
+        //todo getList
 //        asyncStub.getList(sebastian).var;
     }
 
